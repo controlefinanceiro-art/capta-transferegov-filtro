@@ -26,7 +26,6 @@ URL_ORIGEM = "https://repositorio.dados.gov.br/seges/detru/siconv_programa.csv.z
 ARQUIVO_SAIDA = "programas_sc.csv"
 ARQUIVO_METADADOS = "ultima_atualizacao.txt"
 
-# Alguns servidores .gov.br reagem melhor a um cabeçalho de navegador real.
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -52,10 +51,7 @@ def extrair_csv(conteudo_zip: bytes) -> pd.DataFrame:
             raise RuntimeError("Nenhum arquivo .csv encontrado dentro do .zip baixado.")
         nome_csv = nomes_csv[0]
         print(f"Lendo dentro do zip: {nome_csv}")
-       with z.open(nome_csv) as f:
-            # CORRIGIDO: o arquivo original é UTF-8 com BOM (não Latin-1 como
-            # se poderia supor por ser um dado de governo brasileiro antigo).
-            # Ler como Latin-1 causava "mojibake" (ex.: "ção" virava "Ã§Ã£o").
+        with z.open(nome_csv) as f:
             df = pd.read_csv(
                 f,
                 sep=";",
