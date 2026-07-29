@@ -52,11 +52,14 @@ def extrair_csv(conteudo_zip: bytes) -> pd.DataFrame:
             raise RuntimeError("Nenhum arquivo .csv encontrado dentro do .zip baixado.")
         nome_csv = nomes_csv[0]
         print(f"Lendo dentro do zip: {nome_csv}")
-        with z.open(nome_csv) as f:
+       with z.open(nome_csv) as f:
+            # CORRIGIDO: o arquivo original é UTF-8 com BOM (não Latin-1 como
+            # se poderia supor por ser um dado de governo brasileiro antigo).
+            # Ler como Latin-1 causava "mojibake" (ex.: "ção" virava "Ã§Ã£o").
             df = pd.read_csv(
                 f,
                 sep=";",
-                encoding="latin-1",
+                encoding="utf-8-sig",
                 dtype=str,
                 low_memory=False,
                 on_bad_lines="skip",
