@@ -1,3 +1,3 @@
-Última atualização (UTC): 2026-07-31T16:20:28.305671+00:00
+Última atualização (UTC): 2026-08-01T14:43:02.748996+00:00
 Registros no arquivo filtrado: 36830
 Fonte original: https://repositorio.dados.gov.br/seges/detru/siconv_programa.csv.zip
